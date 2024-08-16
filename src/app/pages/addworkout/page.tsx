@@ -17,8 +17,6 @@ interface Exercise {
   description: string;
   sets: number;
   reps: number;
-  descriptionInMinutes: number;
-  exercises: Exercise[];
   imageURL: string;
   imageFile: File | null;
 }
@@ -32,7 +30,7 @@ const page = () => {
     imageFile: null,
   });
 
-  const [exercise, setExercise] = React.useState<Workout>({
+  const [exercise, setExercise] = React.useState<Exercise>({
     name: " ",
     description: " ",
     sets: 0,
