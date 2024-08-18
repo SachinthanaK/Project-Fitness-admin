@@ -38,7 +38,33 @@ const page = () => {
     imageURL: " ",
     imageFile: null,
   });
-  return <div></div>;
+
+  const handleWorkoutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWorkout({
+      ...workout,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleExerciseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExercise({
+      ...exercise,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const addExerciseToWorkout = () => {};
+  const deleteExerciseFromWorkout = (index: number) => {};
+  const uploadImage = async (image: File) => {};
+  const checkLogin = async () => {};
+  const saveWorkout = async () => {};
+
+  return (
+  <div className="frompage">
+    <h1 className="title">
+      Add workout
+    </h1>
+  </div>;
 };
 
 export default page;
