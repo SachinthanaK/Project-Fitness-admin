@@ -60,11 +60,10 @@ const page = () => {
   const saveWorkout = async () => {};
 
   return (
-  <div className="frompage">
-    <h1 className="title">
-      Add workout
-    </h1>
-  </div>;
+    <div className="frompage">
+      <h1 className="title">Add workout</h1>
+    </div>
+  );
 };
 
 export default page;
