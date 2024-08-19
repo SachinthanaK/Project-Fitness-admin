@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 interface Workout {
   name: string;
   description: string;
-  descriptionInMinutes: number;
+  durationInMinutes: number;
   exercises: Exercise[];
   imageURL: string;
   imageFile: File | null;
@@ -24,7 +24,7 @@ const page = () => {
   const [workout, setWorkout] = React.useState<Workout>({
     name: " ",
     description: " ",
-    descriptionInMinutes: 0,
+    durationInMinutes: 0,
     exercises: [],
     imageURL: " ",
     imageFile: null,
