@@ -62,6 +62,26 @@ const page = () => {
   return (
     <div className="frompage">
       <h1 className="title">Add workout</h1>
+      <input
+        type="text"
+        placeholder="Workout Name"
+        name="name"
+        value={workout.name}
+        onChange={handleWorkoutChange}
+      />
+      <textarea
+        placeholder="Workout Description"
+        name="description"
+        value={workout.description}
+        onChange={(e) => {
+          setWorkout({
+            ...workout,
+            description: e.target.value,
+          });
+        }}
+        rows={5}
+        cols={50}
+      />
     </div>
   );
 };
