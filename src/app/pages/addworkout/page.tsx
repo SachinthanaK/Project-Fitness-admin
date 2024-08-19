@@ -82,6 +82,14 @@ const page = () => {
         rows={5}
         cols={50}
       />
+      <label htmlFor="durationInMinutes"> Duration in Minutes</label>
+      <input
+        type="number"
+        placeholder="Workout Duration"
+        name="durationInMinutes"
+        value={workout.durationInMinutes}
+        onChange={handleWorkoutChange}
+      />
     </div>
   );
 };
