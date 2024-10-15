@@ -3,6 +3,7 @@
 import React from "react";
 import "./addworkout.css";
 import { toast } from "react-toastify";
+import { serialize } from "v8";
 
 interface Workout {
   name: string;
@@ -53,11 +54,40 @@ const page = () => {
     });
   };
 
-  const addExerciseToWorkout = () => {};
+  const addExerciseToWorkout = () => {
+    console.log(exercise);
+    if (
+      exercise.name == " " ||
+      exercise.description == " " ||
+      exercise.sets == 0 ||
+      exercise.reps == 0 ||
+      exercise.imageFile == null
+    ) {
+      toast.error("Please fill all the fields", {
+        position: "bottom-center",
+      });
+      return;
+    }
+    setWorkout({
+      ...workout,
+      exercises: [...workout.exercises, exercise],
+    });
+
+    // setExercise({
+    //   name: "",
+    //   description: "",
+    //   sets: 0,
+    //   reps: 0,
+    //   imageURL: "",
+    //   imageFile: null,
+    // });
+  };
   const deleteExerciseFromWorkout = (index: number) => {};
   const uploadImage = async (image: File) => {};
   const checkLogin = async () => {};
-  const saveWorkout = async () => {};
+  const saveWorkout = async () => {
+    console.log(workout);
+  };
 
   return (
     <div className="frompage">
@@ -102,7 +132,14 @@ const page = () => {
           })
         }
       />
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <h2 className="title"> Add Exerise to workout</h2>
         <input
           type="text"
@@ -132,6 +169,33 @@ const page = () => {
           value={exercise.sets}
           onChange={handleExerciseChange}
         />
+        <label htmlFor="reps"></label>
+        <input
+          type="number"
+          placeholder="Reps"
+          name="reps"
+          value={exercise.reps}
+          onChange={handleExerciseChange}
+        />
+        <input
+          type="file"
+          placeholder="exercise Image"
+          name="exerciseImage"
+          onChange={(e) => {
+            setExercise({
+              ...exercise,
+              imageFile: e.target.files![0],
+            });
+          }}
+        />
+
+        <button
+          onClick={(e) => {
+            addExerciseToWorkout(e);
+          }}
+        >
+          Add Exercise
+        </button>
       </div>
     </div>
   );
