@@ -90,6 +90,21 @@ const page = () => {
         value={workout.durationInMinutes}
         onChange={handleWorkoutChange}
       />
+
+      <input
+        type="file"
+        placeholder="Workout Image"
+        name="workoutImage"
+        onChange={(e) =>
+          setWorkout({
+            ...workout,
+            imageFile: e.target.files![0],
+          })
+        }
+      />
+      <div>
+        <h2 className="title"> Add Exerise to workout</h2>
+      </div>
     </div>
   );
 };
