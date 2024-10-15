@@ -104,6 +104,34 @@ const page = () => {
       />
       <div>
         <h2 className="title"> Add Exerise to workout</h2>
+        <input
+          type="text"
+          placeholder="Exercise Name"
+          name="name"
+          value={exercise.name}
+          onChange={handleExerciseChange}
+        />
+        <textarea
+          placeholder="Exercise Description"
+          name="description"
+          value={exercise.description}
+          onChange={(e) => {
+            setExercise({
+              ...exercise,
+              description: e.target.value,
+            });
+          }}
+          rows={5}
+          cols={50}
+        />
+        <label htmlFor="sets"></label>
+        <input
+          type="number"
+          placeholder="Sets"
+          name="sets"
+          value={exercise.sets}
+          onChange={handleExerciseChange}
+        />
       </div>
     </div>
   );
