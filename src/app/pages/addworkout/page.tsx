@@ -82,8 +82,35 @@ const page = () => {
     //   imageFile: null,
     // });
   };
-  const deleteExerciseFromWorkout = (index: number) => {};
-  const uploadImage = async (image: File) => {};
+
+  const deleteExerciseFromWorkout = (index: number) => {
+    setWorkout({
+      ...workout,
+      exercises: workout.exercises.filter((exercise, i) => i !== index),
+    });
+  };
+
+  const uploadImage = async (image: File) => {
+    const formData = new FormData();
+    formData.append(`myimage`, image);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/image-upload/uploadimage`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Image uploaded successfully:", data);
+      return data.imageUrl;
+    } else {
+      console.error("Failed to upload Image");
+      return null;
+    }
+  };
   const checkLogin = async () => {};
   const saveWorkout = async () => {
     console.log(workout);
@@ -197,6 +224,37 @@ const page = () => {
           Add Exercise
         </button>
       </div>
+      <div className="exerises">
+        <h1 className="title">Exercises</h1>
+        {workout.exercises.map((exercise, index) => (
+          <div className="exsrise" key={index}>
+            <h2>{exercise.name}</h2>
+            <p>{exercise.description}</p>
+            <p>{exercise.sets}</p>
+            <p>{exercise.reps}</p>
+            <img
+              src={
+                exercise.imageFile
+                  ? URL.createObjectURL(exercise.imageFile)
+                  : exercise.imageURL
+              }
+              alt=" "
+            />
+
+            <button onClick={() => deleteExerciseFromWorkout(index)}>
+              {" "}
+              Delete{" "}
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={(e) => {
+          saveWorkout(e);
+        }}
+      >
+        Add Workout
+      </button>
     </div>
   );
 };
