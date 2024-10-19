@@ -107,156 +107,224 @@ const page = () => {
       console.log("Image uploaded successfully:", data);
       return data.imageUrl;
     } else {
-      console.error("Failed to upload Image");
+      console.error("Failed to upload Image.");
       return null;
     }
   };
-  const checkLogin = async () => {};
-  const saveWorkout = async () => {
-    console.log(workout);
+  const checkLogin = async () => {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_BACKEND_API + "/admin/checklogin",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      console.log("Admin is authenticated");
+    } else {
+      console.log("admin is not authendicated");
+      window.location.href = "/adminauth/login";
+    }
   };
+  const saveWorkout = async () => {
+    await checkLogin();
+    console.log(workout);
+    if (
+      workout.name == "" ||
+      workout.durationInMinutes == 0 ||
+      workout.imageFile == null ||
+      workout.exercises.length == 0
+    ) {
+      toast.error("Please fill all the fields", {
+        position: "top-center",
+      });
+      return;
+    }
 
-  return (
-    <div className="frompage">
-      <h1 className="title">Add workout</h1>
-      <input
-        type="text"
-        placeholder="Workout Name"
-        name="name"
-        value={workout.name}
-        onChange={handleWorkoutChange}
-      />
-      <textarea
-        placeholder="Workout Description"
-        name="description"
-        value={workout.description}
-        onChange={(e) => {
-          setWorkout({
-            ...workout,
-            description: e.target.value,
-          });
-        }}
-        rows={5}
-        cols={50}
-      />
-      <label htmlFor="durationInMinutes"> Duration in Minutes</label>
-      <input
-        type="number"
-        placeholder="Workout Duration"
-        name="durationInMinutes"
-        value={workout.durationInMinutes}
-        onChange={handleWorkoutChange}
-      />
+    const imageURL = await uploadImage(workout.imageFile);
+    if (imageURL) {
+      setWorkout({
+        ...workout,
+        imageURL,
+      });
+    }
 
-      <input
-        type="file"
-        placeholder="Workout Image"
-        name="workoutImage"
-        onChange={(e) =>
-          setWorkout({
-            ...workout,
-            imageFile: e.target.files![0],
-          })
-        }
-      />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <h2 className="title"> Add Exerise to workout</h2>
+    for (let i = 0; i < workout.exercises.length; i++) {
+      let temping = workout.exercises[i].imageFile;
+      if (temping) {
+        let imageURL = await uploadImage(temping);
+        workout.exercises[i].imageURL = imageURL;
+      }
+    }
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/workoutplans/workouts`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(workout),
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Workout created succesfully", data);
+      toast.success("Workout created successfully", {
+        position: "top-center",
+      });
+    } else {
+      console.log("Workout creation Failed", response.statusText);
+      toast.error("Workout creation Failed", {
+        position: "top-center",
+      });
+    }
+
+    return (
+      <div className="frompage">
+        <h1 className="title">Add workout</h1>
         <input
           type="text"
-          placeholder="Exercise Name"
+          placeholder="Workout Name"
           name="name"
-          value={exercise.name}
-          onChange={handleExerciseChange}
+          value={workout.name}
+          onChange={handleWorkoutChange}
         />
         <textarea
-          placeholder="Exercise Description"
+          placeholder="Workout Description"
           name="description"
-          value={exercise.description}
+          value={workout.description}
           onChange={(e) => {
-            setExercise({
-              ...exercise,
+            setWorkout({
+              ...workout,
               description: e.target.value,
             });
           }}
           rows={5}
           cols={50}
         />
-        <label htmlFor="sets"></label>
+        <label htmlFor="durationInMinutes"> Duration in Minutes</label>
         <input
           type="number"
-          placeholder="Sets"
-          name="sets"
-          value={exercise.sets}
-          onChange={handleExerciseChange}
+          placeholder="Workout Duration"
+          name="durationInMinutes"
+          value={workout.durationInMinutes}
+          onChange={handleWorkoutChange}
         />
-        <label htmlFor="reps"></label>
-        <input
-          type="number"
-          placeholder="Reps"
-          name="reps"
-          value={exercise.reps}
-          onChange={handleExerciseChange}
-        />
+
         <input
           type="file"
-          placeholder="exercise Image"
-          name="exerciseImage"
-          onChange={(e) => {
-            setExercise({
-              ...exercise,
+          placeholder="Workout Image"
+          name="workoutImage"
+          onChange={(e) =>
+            setWorkout({
+              ...workout,
               imageFile: e.target.files![0],
-            });
-          }}
+            })
+          }
         />
-
-        <button
-          onClick={(e) => {
-            addExerciseToWorkout(e);
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          Add Exercise
+          <h2 className="title"> Add Exerise to workout</h2>
+          <input
+            type="text"
+            placeholder="Exercise Name"
+            name="name"
+            value={exercise.name}
+            onChange={handleExerciseChange}
+          />
+          <textarea
+            placeholder="Exercise Description"
+            name="description"
+            value={exercise.description}
+            onChange={(e) => {
+              setExercise({
+                ...exercise,
+                description: e.target.value,
+              });
+            }}
+            rows={5}
+            cols={50}
+          />
+          <label htmlFor="sets"></label>
+          <input
+            type="number"
+            placeholder="Sets"
+            name="sets"
+            value={exercise.sets}
+            onChange={handleExerciseChange}
+          />
+          <label htmlFor="reps"></label>
+          <input
+            type="number"
+            placeholder="Reps"
+            name="reps"
+            value={exercise.reps}
+            onChange={handleExerciseChange}
+          />
+          <input
+            type="file"
+            placeholder="exercise Image"
+            name="exerciseImage"
+            onChange={(e) => {
+              setExercise({
+                ...exercise,
+                imageFile: e.target.files![0],
+              });
+            }}
+          />
+
+          <button
+            onClick={(e) => {
+              addExerciseToWorkout(e);
+            }}
+          >
+            Add Exercise
+          </button>
+        </div>
+        <div className="exerises">
+          <h1 className="title">Exercises</h1>
+          {workout.exercises.map((exercise, index) => (
+            <div className="exsrise" key={index}>
+              <h2>{exercise.name}</h2>
+              <p>{exercise.description}</p>
+              <p>{exercise.sets}</p>
+              <p>{exercise.reps}</p>
+              <img
+                src={
+                  exercise.imageFile
+                    ? URL.createObjectURL(exercise.imageFile)
+                    : exercise.imageURL
+                }
+                alt=" "
+              />
+
+              <button onClick={() => deleteExerciseFromWorkout(index)}>
+                {" "}
+                Delete{" "}
+              </button>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={(e) => {
+            saveWorkout(e);
+          }}
+        >
+          Add Workout
         </button>
       </div>
-      <div className="exerises">
-        <h1 className="title">Exercises</h1>
-        {workout.exercises.map((exercise, index) => (
-          <div className="exsrise" key={index}>
-            <h2>{exercise.name}</h2>
-            <p>{exercise.description}</p>
-            <p>{exercise.sets}</p>
-            <p>{exercise.reps}</p>
-            <img
-              src={
-                exercise.imageFile
-                  ? URL.createObjectURL(exercise.imageFile)
-                  : exercise.imageURL
-              }
-              alt=" "
-            />
-
-            <button onClick={() => deleteExerciseFromWorkout(index)}>
-              {" "}
-              Delete{" "}
-            </button>
-          </div>
-        ))}
-      </div>
-      <button
-        onClick={(e) => {
-          saveWorkout(e);
-        }}
-      >
-        Add Workout
-      </button>
-    </div>
-  );
+    );
+  };
 };
-
 export default page;
