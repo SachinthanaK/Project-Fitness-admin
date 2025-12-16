@@ -46,6 +46,7 @@ const Navbar = () => {
           </>
         ) : (
           <>
+            {/* Bug here */}
             <Link href="./adminauth/login">Login</Link>
             <Link href="./adminauth/register">Signup</Link>
           </>

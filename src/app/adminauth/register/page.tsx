@@ -1,5 +1,3 @@
-//
-
 "use client";
 import React, { useState } from "react";
 import "../auth.css";
@@ -27,16 +25,16 @@ const SignupPage = () => {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (data.ok) {
         console.log("Admin registration successful", data);
 
         toast.success("Admin Registration Successful", {
-          position: "top-center",
+          position: "top-center", // toast.POSITION.TOP_CENTER
         });
       } else {
         console.error("Admin registration failed", response.statusText);
         toast.error("Admin Registration Failed", {
-          position: "top-center",
+          position: "top-center", // toast.POSITION.TOP_CENTER
         });
       }
     } catch (error) {
