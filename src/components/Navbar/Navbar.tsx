@@ -38,17 +38,16 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <Image src={logo} alt="logo" width={100} className="logo" />
+      <Link href="/">
+        <Image src={logo} alt="logo" width={100} className="logo" />
+      </Link>
       <div className="adminlinks">
         {isAdminAuthenticated ? (
-          <>
-            <Link href="/pages/addworkout"> Add Workout </Link>
-          </>
+          <Link href="/pages/addworkout"> Add Workout </Link>
         ) : (
           <>
-            {/* Bug here */}
-            <Link href="./adminauth/login">Login</Link>
-            <Link href="./adminauth/register">Signup</Link>
+            <Link href="/adminauth/login">Login</Link>
+            <Link href="/adminauth/register">Signup</Link>
           </>
         )}
       </div>

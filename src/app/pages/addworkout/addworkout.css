@@ -206,13 +206,13 @@
 }
 
 .btn-add-exercise {
-  background-color: #0078d4;
-  color: white;
+  background-color: #fcb045;
+  color: #000;
   width: 100%;
 }
 
 .btn-add-exercise:hover {
-  background-color: #006bc4;
+  background-color: #e69c00;
 }
 
 .btn-add-exercise:active {
