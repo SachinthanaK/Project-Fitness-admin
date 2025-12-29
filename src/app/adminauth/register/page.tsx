@@ -73,7 +73,7 @@ const SignupPage = () => {
       <div className="auth-card">
         <div className="auth-header">
           <Image
-            src="/icon/appicon.png"
+            src="@/icon/appicon.png"
             alt="Long Power"
             width={60}
             height={60}

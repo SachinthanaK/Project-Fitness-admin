@@ -73,7 +73,7 @@ const Navbar = () => {
     <div className="navbar">
       <Link href="/">
         <Image
-          src="/icon/appicon.png"
+          src="@/icon/appicon.png"
           alt="Long Power"
           width={50}
           height={50}
