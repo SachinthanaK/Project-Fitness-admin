@@ -5,7 +5,7 @@ import Link from "next/link";
 import "./Navbar.css";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import appIcon from "/public/icon/appicon.png";
+import appIcon from "@/public/icon/appicon.png";
 
 const Navbar = () => {
   const router = useRouter();

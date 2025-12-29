@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Image from "next/image";
-import appIcon from "/public/icon/appicon.png";
+import appIcon from "@/public/icon/appicon.png";
 const SigninPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
