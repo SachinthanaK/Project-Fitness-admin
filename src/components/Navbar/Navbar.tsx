@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "./Navbar.css";
-import logo from "./logo.png";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -73,7 +72,13 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <Link href="/">
-        <Image src={logo} alt="logo" width={100} className="logo" />
+        <Image
+          src="/appicon.png"
+          alt="Long Power"
+          width={50}
+          height={50}
+          className="logo"
+        />
       </Link>
       <div className="adminlinks">
         {isAdminAuthenticated ? (

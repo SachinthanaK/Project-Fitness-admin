@@ -4,6 +4,7 @@ import "../auth.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import Image from "next/image";
 
 const SigninPage = () => {
   const [email, setEmail] = useState("");
@@ -69,6 +70,13 @@ const SigninPage = () => {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
+          <Image
+            src="/appicon.png"
+            alt="Long Power"
+            width={60}
+            height={60}
+            className="auth-logo"
+          />
           <h1 className="auth-title">
             LONG POWER <span className="auth-highlight">ADMIN</span>
           </h1>
@@ -102,11 +110,7 @@ const SigninPage = () => {
             />
           </div>
 
-          <button 
-            className="auth-btn" 
-            onClick={handleLogin}
-            disabled={loading}
-          >
+          <button className="auth-btn" onClick={handleLogin} disabled={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </button>
 

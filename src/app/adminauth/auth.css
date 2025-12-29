@@ -1,7 +1,7 @@
 /* ===== Admin Authentication Styling ===== */
 
 .auth-container {
-  min-height: 91vh;
+  height: 86vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,6 +45,12 @@
   margin-bottom: 40px;
   padding-bottom: 30px;
   border-bottom: 1px solid #333;
+}
+
+.auth-logo {
+  margin: 0 auto 20px auto;
+  display: block;
+  border-radius: 8px;
 }
 
 .auth-title {
