@@ -4,8 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import "./Navbar.css";
 import logo from "./logo.png";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
   const checkAdminauthenticated = async () => {
@@ -32,6 +35,37 @@ const Navbar = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_API + "/admin/logout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        setIsAdminAuthenticated(false);
+        localStorage.removeItem("admin-token");
+        const data = await response.json();
+        toast.success(data.message, {
+          position: "top-center",
+        });
+        setTimeout(() => {
+          router.push("/adminauth/login");
+        }, 1500);
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (err) {
+      console.error("Error during logout:", err);
+    }
+  };
+
   useEffect(() => {
     checkAdminauthenticated();
   }, []);
@@ -43,7 +77,12 @@ const Navbar = () => {
       </Link>
       <div className="adminlinks">
         {isAdminAuthenticated ? (
-          <Link href="/pages/addworkout"> Add Workout </Link>
+          <>
+            <Link href="/pages/addworkout"> Edit Workout </Link>
+            <button onClick={handleLogout} className="logout-btn">
+              Log Out
+            </button>
+          </>
         ) : (
           <>
             <Link href="/adminauth/login">Login</Link>
