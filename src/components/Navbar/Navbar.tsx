@@ -5,7 +5,7 @@ import Link from "next/link";
 import "./Navbar.css";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
+import appIcon from "../../images/appicon.png";
 const Navbar = () => {
   const router = useRouter();
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
@@ -73,7 +73,7 @@ const Navbar = () => {
     <div className="navbar">
       <Link href="/">
         <Image
-          src="../../../icon/appicon.png"
+          src={appIcon}
           alt="Long Power"
           width={50}
           height={50}
