@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Image from "next/image";
+import icon from "/public/appicon.png";
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -73,7 +74,7 @@ const SignupPage = () => {
       <div className="auth-card">
         <div className="auth-header">
           <Image
-            src="/appicon.png"
+            src={icon}
             alt="Long Power"
             width={60}
             height={60}
