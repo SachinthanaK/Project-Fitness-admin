@@ -2,7 +2,7 @@
 
 import styles from "./page.module.css";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 export default function Home() {
@@ -11,7 +11,8 @@ export default function Home() {
   const handleCreateWorkout = () => {
     const token = localStorage.getItem("admin-token");
     if (!token) {
-      router.push("/adminauth/login");
+      // after clicking create workout, if not logged in, redirect to login page , then again to create workout page
+      router.push("/adminauth/login?redirect=/pages/addworkout");
     } else {
       router.push("/pages/addworkout");
     }

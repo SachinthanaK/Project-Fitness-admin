@@ -25,6 +25,7 @@ const Navbar = () => {
 
       if (response.ok) {
         setIsAdminAuthenticated(true);
+        localStorage.setItem("admin-token", "true");
       } else {
         setIsAdminAuthenticated(false);
       }

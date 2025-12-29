@@ -6,12 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 import Image from "next/image";
 import appIcon from "../../../images/appicon.png";
-
+import { useSearchParams } from "next/navigation";
 const SigninPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
   const handleLogin = async () => {
     if (!email || !password) {
       toast.error("Please fill in all fields", {
@@ -43,7 +44,11 @@ const SigninPage = () => {
         });
 
         setTimeout(() => {
-          window.location.href = "/";
+          if (redirect) {
+            window.location.href = redirect; // Uses the variable
+          } else {
+            window.location.href = "/";
+          }
         }, 1000);
       } else {
         console.error("Admin Login failed", response.statusText);
